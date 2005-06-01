@@ -1,0 +1,4 @@
+Build.PL
+MANIFEST
+lib/CGI/Session/Hidden.pm
+t/01_load.t
