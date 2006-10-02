@@ -1,46 +1,56 @@
-package CGI::Session::Hidden;
+package CGI::Session::Driver::hidden;
 
 use strict;
+use base qw(CGI::Session::Driver CGI::Session::ErrorHandler);
+
 use MIME::Base64 qw();
 
 our $VERSION = '0.02';
 
 sub store {
-    my( $self, $sid, $options, $data ) = @_;
-    my $storable_data = $self->freeze( $data );
+    my( $self, $sid, $datastr ) = @_;
 
-    $self->{_data} = $storable_data;
+    $self->{_data} = $datastr;
+}
+
+sub retrieve {
+    my( $self, $sid ) = @_;
+
+    return MIME::Base64::decode_base64( $self->_cgi->param( $sid ) || '' );
+}
+
+sub remove {
+    my( $self, $sid ) = @_;
 
     return 1;
 }
 
-sub retrieve {
-    my( $self, $sid, $options ) = @_;
+sub traverse {
+    my( $self, $coderef ) = @_;
 
-    my $data = $self->thaw( MIME::Base64::decode_base64
-                                ( $options->[1]{CGI}->param( $sid ) || '' ) );
-
-    return $data;
-}
-
-# these two do not require an implementation
-sub remove {
-}
-
-sub teardown {
+    # not meaningful...
 }
 
 sub field {
-    my $self = shift;
+    my( $self, $session ) = @_;
 
-    $self->flush unless $self->_data;
+    $session->flush;
+#    die 'Call $session->flush() first' unless $self->_data;
 
     my $val = MIME::Base64::encode_base64( $self->_data );
     return ( 'type="hidden" name="' .
-             $self->id . '" value="' . $val . '"' );
+             $session->id . '" value="' . $val . '"' );
 }
 
 sub _data { $_[0]->{_data} }
+sub _cgi { $_[0]->{CGI} }
+
+# EVIL
+sub CGI::Session::field {
+    my( $self ) = @_;
+
+    return $self->_driver->field( $self );
+}
 
 1;
 
@@ -48,14 +58,14 @@ __END__
 
 =head1 NAME
 
-CGI::Session::Hidden - persistent session using hidden fields
+CGI::Session::Driver::hidden - persistent session using hidden fields
 
 =head1 SYNOPSIS
 
 In the CGI script:
 
     use CGI::Session;
-    my $session = new CGI::Session("driver:Hidden", undef,
+    my $session = new CGI::Session("driver:hidden", undef,
                                    {CGI=>$cgi_obj});
 
 In the HTML (pseudo-code):
@@ -68,7 +78,7 @@ or
 
 =head1 DESCRIPTION
 
-This driver module for CGI::Session 3.x allows storing the session inside
+This driver module for CGI::Session 4.x allows storing the session inside
 a hidden field in the HTML page.
 
 The semantics are somewhat different
@@ -82,11 +92,6 @@ than standard driver modules, but good enough for most uses.
 
 Produces C<type>, C<name> and C<value> attributes to be used
 inside and HTML C<< <input> >> tag.
-
-=head1 BUGS
-
-It is not (and can not be) a drop-in replacement for other
-drivers.
 
 =head1 AUTHOR
 

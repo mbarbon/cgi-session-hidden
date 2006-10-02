@@ -1,11 +1,8 @@
 #!/usr/bin/perl -w
 
 use strict;
-use Test;
 
-BEGIN { plan tests => 1 }
+use Test::More tests => 2;
 
-use CGI::Session;
-use CGI::Session::Hidden;
-
-ok( 1 ); # got there
+use_ok( 'CGI::Session::Hidden' );
+use_ok( 'CGI::Session::Driver::hidden' );
