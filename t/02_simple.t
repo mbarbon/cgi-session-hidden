@@ -2,13 +2,14 @@
 
 use strict;
 
-use Test::More;
+use Test::More import => ['!plan'];
 BEGIN{
-    eval "require Apache::Test; use HTML::Form; use Test::LongString";
-    plan skip_all => "Apache::Test, HTML::Form, Test::LongString required"
+    eval "use Apache::Test qw(-withtestmore); use HTML::Form; use Test::LongString";
+    Test::More::plan( skip_all => "Apache::Test, HTML::Form, Test::LongString required" )
           if $@;
 }
-plan tests => 8;
+Apache::Test::plan( tests => 8,
+                    Apache::Test::need_module( 'cgi', 'env' ) );
 
 use Apache::TestRequest qw(GET POST);
 
