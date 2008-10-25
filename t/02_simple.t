@@ -8,6 +8,8 @@ BEGIN{
     Test::More::plan( skip_all => "Apache::Test, HTML::Form, Test::LongString required" )
           if $@;
 }
+Apache::Test::plan( skip_all => 'using compatibility Makefile.PL' )
+    if -f 'Makefile' || -f 'makefile';
 Apache::Test::plan( tests => 8,
                     Apache::Test::need_module( 'cgi', 'env' ) );
 
