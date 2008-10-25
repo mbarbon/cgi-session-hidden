@@ -1,0 +1,16 @@
+*~
+Build
+_build
+blib
+cover_db
+TAGS
+META.yml
+Makefile.PL
+t/TEST
+t/htdocs
+t/logs
+t/conf/apache_test_config.pm
+t/conf/extra.last.conf
+t/conf/httpd.conf
+t/conf/modperl_inc.pl
+t/conf/modperl_startup.pl
