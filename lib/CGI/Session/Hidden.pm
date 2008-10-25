@@ -3,7 +3,7 @@ package CGI::Session::Hidden;
 use strict;
 use MIME::Base64 qw();
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 sub store {
     my( $self, $sid, $options, $data ) = @_;
