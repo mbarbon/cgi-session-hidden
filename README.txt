@@ -21,7 +21,9 @@ or
     make test
     make install
 
-Copyright (c) 2005-2006 Mattia Barbon. All rights reserved.
+Copyright (c) 2005-2006, 2008 Mattia Barbon. All rights reserved.
 This program is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.
 
+The latest sources can be found on GitHub at
+http://github.com/mbarbon/cgi-session-hidden/tree

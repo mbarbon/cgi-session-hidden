@@ -5,7 +5,7 @@ use base qw(CGI::Session::Driver CGI::Session::ErrorHandler);
 
 use MIME::Base64 qw();
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 sub store {
     my( $self, $sid, $datastr ) = @_;
@@ -101,6 +101,11 @@ Mattia Barbon <mbarbon@cpan.org>.
 
 This program is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.
+
+=head1 SOURCES
+
+The latest sources can be found on GitHub at
+L<http://github.com/mbarbon/cgi-session-hidden/tree>
 
 =head1 SEE ALSO
 
