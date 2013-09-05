@@ -105,7 +105,7 @@ modify it under the same terms as Perl itself.
 =head1 SOURCES
 
 The latest sources can be found on GitHub at
-L<http://github.com/mbarbon/cgi-session-hidden/tree>
+L<https://github.com/mbarbon/cgi-session-hidden>
 
 =head1 SEE ALSO
 
