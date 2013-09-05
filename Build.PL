@@ -18,6 +18,11 @@ my $build = $build_pkg->new
                   'if'             => '0.03',
                   },
     create_makefile_pl => 'traditional',
+    meta_merge => {
+        resources => {
+            repository => 'https://github.com/mbarbon/cgi-session-hidden'
+        }
+    },
     );
 
 $build->create_build_script;
